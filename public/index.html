@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Youtube Navigation with Node, Mongo and Angular</title>
+
+    <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/novo.css">
+    <link rel="stylesheet" type="text/css" href="css/result-light.css">
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+    <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+  </head>
+  <body ng-app="Youtube" ng-controller="SearchController" ng-cloak>
+
+
+    <!-- NAVIGATION BAR -->
+    <div ng-repeat="topblc in block.menubar" ng-include="topblc.url" class="navbar navbar-fixed-top navbar-inverse"></div>
+
+
+    <!-- BODY -->
+    <div class="container-fluid mtop">
+
+      <div ng-show="blocksToggle" class="row-fluid">
+        <div class="span3">
+          <label ng-repeat="bck in block.leftbar" class="checkbox inline">
+            <input type="checkbox" ng-model="bck.active"/><span>{{bck.name}}</span>
+          </label>
+          <label class="checkbox inline">
+            Toggle Módulos
+          </label>
+        </div>
+        <div class="span6">
+          <label ng-repeat="bck in block.main" class="checkbox inline">
+            <input type="checkbox" ng-model="bck.active"/><span>{{bck.name}}</span>
+          </label>
+          <label class="checkbox inline">
+            Toggle Módulos
+          </label>
+        </div>
+        <div class="span3">
+          <label ng-repeat="bck in block.rightbar" class="checkbox inline">
+            <input type="checkbox" ng-model="bck.active"/><span>{{bck.name}}</span>
+          </label>
+          <label class="checkbox inline">
+            Toggle Módulos
+          </label>
+        </div>
+      </div>
+
+
+      <div class="row-fluid">
+
+
+        <!-- LEFT SIDEBAR - INFOS VIDEO PLAYING - LAST VIEWED -->
+        <div class="span3">
+
+          <!-- LOOP FOR BLOCKS FROM LEFT -->
+          <section 
+            ng-show="blc.active" 
+            ng-include="blc.url" id="{{blc.name}}" class="blc_{{blc.name}}"
+            ng-repeat="blc in block.leftbar"
+          ></section>
+        </div>
+        <!-- END LEFTBAR -->
+
+        <!-- MAIN CONTENT - VIDEO PLAYER - PLAYLISTS -->
+        <div class="span6" class="well">
+          <div
+            ng-repeat="bmc in block.main"
+            ng-include="bmc.url" id="{{bmc.name}}" 
+            class="bmc_{{bmc.name}}"
+            ng-show="bmc.active"
+          ></div>
+          <!-- END MAIN -->
+
+        </div>
+
+        <!-- RIGHT SIDEBAR - SEARCH - SEARCH RESULTS -->
+        <div class="span3">
+
+          <div
+            ng-repeat="brc in block.rightbar"
+            ng-include="brc.url" id="{{brc.name}}" 
+            class="brc_{{brc.name}}"
+            ng-show="brc.active"
+          ></div>
+
+        </div>
+        <!-- END RIGHT BAR -->
+      </div>
+      <!-- END BODY -->
+    </div>
+    <!-- MOUSER OVER VIDEO BLOCK -->
+    <div 
+      onmouseover="$(this).css('display','block')" 
+      onmouseout="$(this).css('display','none')" 
+      class="tt" 
+      ng-include="btblc.url" 
+      ng-repeat="btblc in block.general"
+    ></div>
+
+    <!-- MODAL OF USER -->
+    <div id="myModal" class="modal hide" tabindex="-1" role="dialog" id="modalUser" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="$('#myModal').fadeToggle();return false;" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Editar Perfil:</h3>
+      </div>
+      <div class="modal-body">
+        <div class="well doc-example-live">
+          <div>
+            <form novalidate class="simple-form">
+              Name: <input type="text" ng-model="userInfo.name" value="{{name}}" /><br />
+              E-mail: <input type="email" ng-model="userInfo.email" value="{{email}}" /><br />
+              Idade: <input type="text" ng-model="userInfo.age" value="{{age}}" /><br />
+              <div class="form-inline">
+                Sexo: <input type="radio" ng-model="userInfo.gender" value="male" />masc.
+                <input type="radio" ng-model="userInfo.gender" value="female" />fem.<br />
+              </div>
+              Senha: <input type="text" ng-model="userInfo.password" value="{{password}}" /><br />
+              <!-- <button ng-click="reset()">RESET</button> -->
+              <button ng-click="updateUser()">SAVE</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="" onclick="$('#myModal').fadeToggle();return false;" class="btn">Close</a>
+      </div>
+    </div>
+
+    <!-- BOTTOM BAR FAVORITES -->
+    <div 
+      ng-include="block.bottombar[0].url" 
+      ng-show="favoritesToggle" 
+      class="navbar navbar-fixed-bottom navbar-inverse favorites"
+    ></div>
+
+    <!-- BOTTOM BAR BLOCK -->
+    <div 
+      ng-include="block.bottombar[1].url" class="navbar navbar-fixed-bottom navbar-inverse"></div>
+
+    <!-- SCRIPTS GENERALS -->
+    <script type='text/javascript' src="js/controllers.js"></script>
+    <script type='text/javascript' src="js/services.js"></script>
+    <script type="text/javascript" src="js/helpers.js"></script>
+    <script type="text/javascript" src="js/directives.js"></script>
+  </body>
+</html>

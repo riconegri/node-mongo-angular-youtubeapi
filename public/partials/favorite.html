@@ -1,0 +1,24 @@
+<div class="navbar-inner">
+  <div class="container-fluid">
+    <div class="form-inline">
+      <a ng-click="toggleFavorites()">Favoritos</a>
+    </div>
+    <div>
+      <ul class="favoritesBottombar">
+        <li id="bottombar2_{{id}}" ng-show="id" ng-repeat="id in video_favorites">
+          <a 
+            ng-click="video.addPlay(id)" 
+            onclick="Player.loadVideo('{{id}}')" 
+            class="thumbnail"
+          >
+            <img ng-src="http://img.youtube.com/vi/{{id}}/1.jpg" height="58" width="58" 
+              onmouseover="Img.mousOverImage(this,'{{id}}',1,'bottombar2');"
+              onmouseout="Img.mouseOutImage(this)"
+              ng-mouseover="loadThumbMouseOverVideo(id)"
+            />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

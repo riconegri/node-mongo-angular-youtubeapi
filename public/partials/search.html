@@ -1,0 +1,15 @@
+<!-- SEARCH SECTION -->
+<div id="header" class="well">
+  <form ng:submit="doSearch(query)">
+    <span class="videoCount" ng-show="videos.length">{{videos.length}}</span>
+      <input class="input-small focused" ng-model="query"/>
+      <div class="btns">
+        <a class="btn btn-success" ng-click="doSearch(query)">
+          <i class="icon-search"></i> &nbsp;Search
+        </a>
+      </div>
+      <img  id="img-spinner" ng-show="searching"
+            ng-class="searching && 'active' "
+            src="https://raw.github.com/ThomasBurleson/angularJS-TwitterSearch/master/webroot/assets/image/spinner2.gif" alt="Loading"/>
+  </form>
+</div>

@@ -1,0 +1,31 @@
+<div class="clearfix">
+  <h4 ng-init="max_pages=[1,2,3,4]";>Últimos visualizados</h4>
+  quantidade{{video_play.length}}
+
+  <ul class="lastViewed" ng-repeat="pg in max_pages">
+    <li id="leftbar_{{v._id}}"  ng-show="v._id&&$index>=(pg-1)*16&&$index<pg*16&&video.actual_page==pg" ng-repeat="v in video_play">
+      <a 
+        ng-click="video.addPlay(v._id)" 
+        onclick="Player.loadVideo('{{v._id}}')" 
+        class="thumbnail"
+      >
+        <img ng-src="http://img.youtube.com/vi/{{v._id}}/1.jpg" height="58" width="58" 
+          onmouseover="Img.mousOverImage(this,'{{v._id}}',1,'leftbar');"
+          onmouseout="Img.mouseOutImage(this)"
+          ng-mouseover="loadThumbMouseOverVideo(v)"
+          title="{{v.term}}"
+        />
+      </a>
+    </li>
+  </ul>
+  <div class="pagination pagination-mini pagination-centered clearfix" ng-show="video_play.length>15">
+    <ul>
+      <li><a ng-click="video.setActualPage(1)" href="#">Prev</a></li>
+      <li><a ng-click="video.setActualPage(1)" href="#">1</a></li>
+      <li><a ng-click="video.setActualPage(2)" href="#">2</a></li>
+      <li><a ng-click="video.setActualPage(3)" href="#">3</a></li>
+      <li><a ng-click="video.setActualPage(4)" href="#">4</a></li>
+      <li><a ng-click="video.setActualPage(5)" href="#">Next</a></li>
+    </ul>
+  </div>
+</div>

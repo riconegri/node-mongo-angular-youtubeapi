@@ -1,0 +1,19 @@
+<div class="clearfix">
+  <h4>Favoritos</h4>
+  <ul class="favoriteMain">
+    <li id="leftbar_{{v}}" ng-repeat="v in video_favorites">
+      <a 
+        ng-click="video.addPlay(v)" 
+        onclick="Player.loadVideo('{{v}}')" 
+        class="thumbnail"
+      >
+        <img ng-src="http://img.youtube.com/vi/{{v}}/1.jpg" height="58" width="58" 
+          onmouseover="Img.mousOverImage(this,'{{v}}',1,'leftbar');"
+          onmouseout="Img.mouseOutImage(this)"
+          ng-mouseover="loadThumbMouseOverVideo(v)"
+          title="{{v.term}}"
+        />
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,16 @@
+<!-- PLAYER CANVAS -->
+<div id="player">
+  <div id="videoDiv" class="span12" style="height:500px" onresize="alert('oi')">
+    <object type="application/x-shockwave-flash" id="ytPlayer" 
+    	data="http://www.youtube.com/v/{{video_play.0._id}}?version=3&amp;enablejsapi=1&amp;playerapiid=player1" 
+    	width="100%" height="100%">
+    <param name="allowScriptAccess" value="always">
+  	</object>
+  </div>
+</div>
+<script type="text/javascript">
+$(window).resize(function() {
+  var palco = $('#videoDiv');
+  palco.css('height', palco.width()*0.67);
+});
+</script>

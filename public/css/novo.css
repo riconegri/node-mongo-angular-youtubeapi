@@ -1,0 +1,46 @@
+.videosResult>li,.lastViewed>li,.playlistBottombar>li,.favoritesBottombar>li,.favoriteMain>li{
+	margin: 3px;
+	list-style: none;
+	display: block;
+	width: 58px;
+	cursor: pointer;
+	float: left;
+}
+.videosResult,.lastViewed{
+	margin: 0 0 10px 10px;
+	display: block;
+}
+
+.margin3{
+	margin: 3px;
+}
+
+.btns{
+	display: inline;
+}
+.mtop{
+	margin: 41 0 0 0;
+}
+
+.pagination {
+	clear: both;
+}
+
+.tt {
+	position: absolute;
+	display: none;
+	padding: 0;
+	font: medium arial,sans-serif;
+	/*Z-INDEX PARA FICAR ACIMA DA BARRA */
+	z-index: 1050;
+	width: 350px;
+/*height: 162px;*/
+	background-color:#fff;
+	border: 1px dashed blue;
+}
+.tt div{
+	margin: 5px;
+}
+.favorites {
+	bottom: 93px;
+}

@@ -1,0 +1,39 @@
+<div>
+  <img 
+    alt="{{mov.title.$t}}"
+    onmouseover="Img.bannerVideo(this,'{{mov.media$group.yt$videoid.$t}}',1)"
+    onmouseout="clearTimeout(timer);"
+    ng-src="http://img.youtube.com/vi/{{mov.media$group.yt$videoid.$t}}/1.jpg" 
+  >
+
+  <button class="btn btn-primary" 
+    ng-click="addFavorites(mov.media$group.yt$videoid.$t)" 
+    title="Adicionar a favoritos"><i class="icon-heart icon-white"
+  > </i></button>
+
+  <button class="btn btn-primary" onclick="Player.loadVideo('{{mov.media$group.yt$videoid.$t}}')" title="Play">
+    <i class="icon-eye-open icon-white"></i>
+  </button>
+  
+  <button 
+    class="btn btn-primary" 
+    ng-click="addToPlayList(mov.media$group.yt$videoid.$t);" 
+    title="Adicionar a playlist"
+  ><i class="icon-plus-sign icon-white"> </i></button>
+
+  <button class="btn btn-primary" title="Remover desta lista"><i class="icon-minus-sign icon-white"> </i></button>
+  
+  <button class="btn btn-primary" ng-click="doSearch(mov.term)" title="Buscar termo {{mov.term}}"><i class="icon-search icon-white"> </i></button>
+
+  <div>{{mov.title.$t}}</div>
+  <div ng-show="mov.author.length">
+    <b>Autor(es): </b>
+    <span ng-repeat="autor in mov.author">
+      <a target="_blank" ng-href="{{autor.uri.$t}}">{{autor.name.$t}}</a>
+    </span>
+  </div>
+  <div><b>Visualizado: </b>{{mov.yt$statistics.viewCount}} </div>
+  <div><b>Likes: </b>{{mov.yt$rating.numLikes}} <b>Dislikes: </b> {{mov.yt$rating.numDislikes}}</div>
+  <div><b>Rating: </b>{{mov.gd$rating.average}}</div>
+  <div><b>Termo: </b> {{mov.term}}</div>
+</div>

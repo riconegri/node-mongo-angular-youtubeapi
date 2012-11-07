@@ -1,0 +1,15 @@
+<!-- RESULT SEARCH BLOCK -->
+<div ng-show="videos.length" ng-cloak>
+  <h4 ng-show="lastQuery">Vídeos pela palavra <i class="label label-info">{{lastQuery}}</i></h4>
+  <ul class="videosResult thumbnails">
+    <li ng-class="v.isSelected && 'active'" ng-repeat="v in videos" id="rightbar_{{v.media$group.yt$videoid.$t}}">
+      <a ng-click="video.addPlay(v)" onclick="Player.loadVideo('{{v.media$group.yt$videoid.$t}}')" class="thumbnail">
+        <img ng-src="http://img.youtube.com/vi/{{v.media$group.yt$videoid.$t}}/1.jpg" height="58" width="58" 
+          onmouseover="Img.mousOverImage(this,'{{v.media$group.yt$videoid.$t}}',1,'rightbar');"
+          onmouseout="Img.mouseOutImage(this)"
+          ng-mouseover="loadThumbMouseOverVideo(v.media$group.yt$videoid.$t)"
+        />
+      </a>
+     </li>
+  </ul>
+</div>

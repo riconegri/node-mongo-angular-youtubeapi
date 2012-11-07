@@ -1,0 +1,49 @@
+<div class="navbar-inner">
+  <div class="container-fluid">
+  	<div class="form-inline">
+  		<b>Playlist</b>
+  		{{actualPlaylist}}
+  		<select ng-model="actualPlaylist" class="selectPlaylist">
+  			<option value="">Selecione uma playlist</option>
+  			<option ng-selected="i.active" value="{{i._id}}" ng-selected="i.active" ng-repeat="i in video_playlist">{{i._id}}</option>
+  		</select>
+		<button class="btn btn-success" ng-click="activeNewPlaylist()" title="Adicionar nova playlist">
+			<i class="icon-plus-sign icon-white"> </i>
+		</button>
+		<input ng-show="btnclic" type="text" value="{{newPlaylist}}" ng-model="newPlaylist" placeholder="Informe o nome da sua playlist">
+		<button ng-show="btnclic" class="btn btn-success" ng-click="addNewPlayList(newPlaylist)" title="Adicionar nova playlist">
+			<i class="icon-thumbs-up icon-white"> </i>
+		</button>
+  		<!-- PLAYLIST COMMANDS BUTTONS -->
+  		<i ng-show="actualPlaylist&&!btnclic">
+	  		<button 
+	  			class="btn btn-primary" 
+	  			onclick="ytplayer.playVideoAt(0)" 
+	  			title="Primeiro vídeo do playlist"
+	  		><i class="icon-step-backward icon-white"></i></button>
+	  		<button class="btn btn-primary" onclick="ytplayer.previousVideo()" title="Vídeo anterior"><i class="icon-backward icon-white"></i></button>
+	  		<button class="btn btn-primary" onclick="Player.loadPlayList()" title="Tocar playlist"><i class="icon-play icon-white"></i></button>
+	  		<button class="btn btn-primary" onclick="ytplayer.pauseVideo()" title="Pausar playlist"><i class="icon-pause icon-white"></i></button>
+	  		<button class="btn btn-primary" onclick="ytplayer.nextVideo()" title="Próximo vídeo"><i class="icon-forward icon-white"></i></button>
+	  		<button class="btn btn-primary" onclick="Player.playLastVideo()" title="Último vídeo"><i class="icon-step-forward icon-white"></i></button>
+  		</i>
+  	</div>
+  	<div>
+	    <ul ng-show="actualPlaylist==pl._id" class="playlistBottombar" ng-repeat="pl in video_playlist">
+	      <li id="bottombar_{{id}}" ng-show="id" ng-repeat="id in pl.ids">
+	        <a 
+	          ng-click="video.addPlay(id)" 
+	          onclick="Player.loadVideo('{{id}}')" 
+	          class="thumbnail"
+	        >
+	          <img ng-src="http://img.youtube.com/vi/{{id}}/1.jpg" height="58" width="58" 
+	            onmouseover="Img.mousOverImage(this,'{{id}}',1,'bottombar');"
+	            onmouseout="Img.mouseOutImage(this)"
+	            ng-mouseover="loadThumbMouseOverVideo(id)"
+	          />
+	        </a>
+	      </li>
+	    </ul>
+  	</div>
+  </div>
+</div>    

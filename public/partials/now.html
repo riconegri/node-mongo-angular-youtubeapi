@@ -1,0 +1,13 @@
+<div class="clearfix">
+  <h4>Agora: </h4>
+  <div><b>Título: </b> {{video.playing.title.$t}}</div>
+  <div ng-show="video.playing.author.length">
+    <b>Autor(es): </b>
+    <span ng-repeat="autor in video.playing.author">
+      <a target="_blank" href="{{autor.uri.$t}}">{{autor.name.$t}}</a>
+    </span>
+  </div>
+  <div><b>Visualizado: </b><i>{{video.playing.yt$statistics.viewCount}} </i></div>
+  <div><b>Likes: </b>{{video.playing.yt$rating.numLikes}} <b>Dislikes: </b><i> {{video.playing.yt$rating.numDislikes}}</i></div>
+  <div><b>Rating: </b><i>{{video.playing.gd$rating.average}}</i></div>
+</div>
