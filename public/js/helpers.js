@@ -1,7 +1,6 @@
 Img = {
 	mousOverImage: function (img,id,nr,layout){
     //var pst = $("#lv_"+id).position();
-    console.log("mov",layout);
     $("#" + layout + "_" + id).mouseover(function(e){
           //$('#status').html(e.pageX +', '+ e.pageY);
       var distances = {
@@ -10,7 +9,6 @@ Img = {
         bottombar2: {'left': e.pageX,'bottom': '135','top':"","right":''},
         rightbar  : {'right': 15,'top': e.pageY,'bottom':"",'left':""}
       };
-      console.log("mov2",distances[layout]);
       ttmr = setTimeout(function() {$('.tt').css(distances[layout]).fadeIn(300);},600);
     });
 	},
@@ -68,7 +66,6 @@ Player = {
     // The element id of the Flash embed
     var atts = { id: "ytPlayer" };
     // All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
-    console.log("load player",videoID);
     swfobject.embedSWF("http://www.youtube.com/v/" + videoID +
                        "?version=3&enablejsapi=1&playerapiid=player1",
                        "videoDiv", "100%", "480", "9", null, null, params, atts);

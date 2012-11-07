@@ -4,14 +4,14 @@
   		<b>Playlist</b>
   		{{actualPlaylist}}
   		<select ng-model="actualPlaylist" class="selectPlaylist">
-  			<option value="">Selecione uma playlist</option>
-  			<option ng-selected="i.active" value="{{i._id}}" ng-selected="i.active" ng-repeat="i in video_playlist">{{i._id}}</option>
+  			<!-- <option value="">Selecione uma playlist</option> -->
+  			<option ng-selected="i.active" value="{{i._id}}" ng-selected="i._id==actualPlaylist" ng-repeat="i in video_playlist">{{i._id}}</option>
   		</select>
 		<button class="btn btn-success" ng-click="activeNewPlaylist()" title="Adicionar nova playlist">
 			<i class="icon-plus-sign icon-white"> </i>
 		</button>
 		<input ng-show="btnclic" type="text" value="{{newPlaylist}}" ng-model="newPlaylist" placeholder="Informe o nome da sua playlist">
-		<button ng-show="btnclic" class="btn btn-success" ng-click="addNewPlayList(newPlaylist)" title="Adicionar nova playlist">
+		<button ng-show="btnclic" class="btn btn-success" ng-click="addNewPlayList(newPlaylist)" title="Salvar playlist">
 			<i class="icon-thumbs-up icon-white"> </i>
 		</button>
   		<!-- PLAYLIST COMMANDS BUTTONS -->

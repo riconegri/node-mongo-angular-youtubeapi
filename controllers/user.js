@@ -66,9 +66,14 @@ exports.user_update = function( req, res ) {
 
 exports.save_search = function (req, res) {
   User.findOne(function (err, user) {
+    for(var x in user.video_search){
+      if(user.video_search[x].name == req.body.query)
+        user.video_search[x].remove();
+    }
     user.video_search.push(
         {name:req.body.query}
     );
+    //res.send(user.video_search);
     user.save(function (err) {
       if (err) {res.send(err);}else{res.send(user);}
     });
@@ -91,7 +96,7 @@ exports.save_favorite = function (req, res) {
 
 exports.save_playlist = function (req, res) {
   User.findOne(function (err, user) {
-    res.send(req.body);
+    //res.send(req.body);
     if(req.body.nplist){
       user.video_playlist.push(req.body);
     }else{
@@ -105,7 +110,7 @@ exports.save_playlist = function (req, res) {
       if ( err )
         res.send( err );
       else
-        res.send( user );
+        res.send( user.video_playlist );
     });
   });
 };

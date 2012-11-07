@@ -10,9 +10,6 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
   $scope.favoritesToggle  = false;
   $scope.blocksToggle     = false;
 
-  //html path for includes
-  //$scope.block = {};
-
   $scope.uinterf = {
     blck_playing    : true,
     blck_lastviewed : false,
@@ -48,12 +45,13 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
       if (v.length === 11) {
         v = $scope.cacheVideosById[v];//v == video id
       }
-      console.log("addPlay",v);
+
       this.playing = v;
-      console.log("controller->addPlay " + v.media$group.yt$videoid.$t + v.title.$t + $scope.query);
+
       if (v.media$group.yt$videoid.$t) {
         $user.save_play(v.media$group.yt$videoid.$t, v.title.$t, $scope.query);
       }
+
       var lastViewModel =  {
         _id: v.media$group.yt$videoid.$t,
         term: $scope.query,
@@ -61,6 +59,7 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
       };
 
       $scope.video_play.unshift(lastViewModel);
+
     },
     addItemPlayList : function () {
       
@@ -73,7 +72,6 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
   //load user tree with all data and declare $scope variables
   $scope.getUser  = function () {
     //$log.log("doSearch( '" + searchTerm + " ')");
-    //console.log($log);
 
     $scope.userLoading = true;
     $scope.putz = "partials/test.html";
@@ -82,7 +80,6 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
     return $user
     .user()
     .then( function( response ){
-      //console.log("USER->",response);
       
       $scope = angular.extend($scope,response);
       console.log("USER->",$scope);
@@ -100,7 +97,7 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
       $scope.doSearch( $scope.query, true );
       //get infos by video id
 
-      //
+      //user info for update server
       $scope.userInfo   = {
         name: $scope.name,
         email: $scope.email,
@@ -122,15 +119,15 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
 
   //save info
   $scope.updateUser = function () {
-    //console.log(user);
     $scope.userUpdateInfo = angular.copy($scope.userInfo);
     $user.update_user($scope.userUpdateInfo);
+    setTimeout(function() {
+      $('#myModal').fadeToggle();
+    },2000);
   };
 
   $scope.getUser();
-  console.log('playing',$scope.video.playing);
 
-  //
   $scope.isReload = 1;
 
   $scope.searching =  false;
@@ -147,7 +144,6 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
    *  @return promise for future response
    */
   $scope.doSearch  = function (searchTerm, no_save) {
-    //$log.log("doSearch( '" + searchTerm + " ')");
 
     $scope.searching = true;
 
@@ -160,8 +156,14 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
 
       if(!no_save){
         $scope.saveSearch();
-        $scope.video_search.push({name: searchTerm});
+
+        for(var x in $scope.video_search)
+          if ( $scope.video_search[x]['name'] ==  searchTerm)
+            $scope.video_search.splice(x,1);
+        
+        $scope.video_search.unshift({name: searchTerm});
       }
+
       $scope.query = searchTerm;
       $scope.countDown  = 180;
       $scope.lastQuery  = $scope.query;
@@ -179,20 +181,16 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
 
   $scope.getInfoVideoById = function(id) {
     var id_str = id.constructor == String ? id : id._id;
-    //console.log(id_str,"id");
     if ($scope.cacheVideosById[id_str]) {
       $scope.mov = $scope.cacheVideosById[id_str];
-      //console.log('video cache',$scope.cacheVideosById[id_str]);
       //angular.extend($scope.mov, {_id:id});
     }else{
-      //console.log("getInfoVideoById",id_str);
       if(!id_str)return false;
       
       return $youtube.vid(id_str).then(function( response ) {
         $scope.cacheVideosById[id_str] = response;
         $scope.mov = $scope.cacheVideosById[id_str];
         //angular.extend($scope.mov, id);
-        //console.log('movi',$scope.mov);
       });
     }
   };
@@ -217,7 +215,8 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
   };
 
   $scope.activeNewPlaylist = function() {
-    $scope.btnclic = 10;
+    //toggle input add playlist
+    $scope.btnclic = 1;
   };
 
   $scope.addNewPlayList = function(listName) {
@@ -225,11 +224,12 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
     $scope.video_playlist.push({_id:listName,ids:[]});
     //set actual playlist
     $scope.actualPlaylist = $scope.newPlaylist;
+    alert(listName);
+    $scope.actualPlaylist = listName;
+    $('.selectPlaylist').val(listName);
+    alert($('.selectPlaylist').val());
     $scope.btnclic = false;
 
-    //console.log($scope.btnclic);
-    //save playlist to server
-    //$user.save_playlist({_id:listName,ids:[],nplist:1});
   };
 
   $scope.addToPlayList = function(id){
@@ -237,11 +237,20 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
         pl = $scope.video_playlist;
 
     if(playlist_selected.val()){
+
       for(var x in pl){
+
         if (pl[x]._id == playlist_selected.val()) {
+
           pl[x].ids.push(id);
-          $user.save_playlist({_id: pl[x]._id,ids:pl[x].ids,nplist:0});
+          $user.save_playlist({
+            _id: pl[x]._id,
+            ids:pl[x].ids,
+            nplist:pl[x].ids.length>0?1:0
+          });
+
         }
+
       }
 
     }
@@ -249,11 +258,9 @@ function SearchController($scope, $youtube, $user, $log, $rootScope)
 
   //load info from mouse over
   $scope.loadThumbMouseOverVideo = function(v) {
-    //console.log($scope.cacheVideosById[v._id]);
     $scope.getInfoVideoById(v);
   };
 
-  //console.log($scope);
 }
 
 function SoController ( $scope ) {
