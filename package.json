@@ -1,0 +1,26 @@
+
+{
+  "name": "express-mongo-angular",
+  "author": "gaarf (/humans.txt)",
+  "description": "Express/Mongo/Angular",
+  "version": "0.0.3",
+  "main": "boot.js",
+  "engines": {
+    "node": "~0.6"
+  },
+  "dependencies": {
+    "express": ">=2.5.8",
+    "ejs": ">=0.4.1",
+
+    "mongoose": "*",
+    "connect-mongodb": "*",
+
+    "underscore": ">=1.1.6",
+    "underscore.string": ">=1.1.6",
+    "dateformat": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
+}
